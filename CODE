@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      background-color: olive;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
+    }
+    .container {
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+    h1 {
+      font-size: 60px;
+      margin: 10px 0 40px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px #000;
+    }
+    p {
+      font-size: 26px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px #000;
+    }
+    /* Slideshow styles */
+    .slideshow {
+      position: relative;
+      width: 80vw;
+      max-width: 600px;
+      height: auto;
+      margin: 0 auto 40px;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      display: none;
+      transition: opacity 1s ease-in-out;
+    }
+    .slide.active {
+      display: block;
+      opacity: 1;
+    }
+    /* Balloons animation */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 100px;
+      height: auto;
+      opacity: 0.85;
+      animation-name: floatUp;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+    }
+    /* Silver balloons */
+    .silver1 { left: 5%; animation-duration: 10s; animation-delay: 0s; }
+    .silver2 { left: 25%; animation-duration: 12s; animation-delay: 3s; }
+    .silver3 { left: 45%; animation-duration: 9s; animation-delay: 6s; }
+    .silver4 { left: 65%; animation-duration: 11s; animation-delay: 2s; }
+    .silver5 { left: 85%; animation-duration: 13s; animation-delay: 4s; }
+    /* Black balloons */
+    .black1 { left: 15%; animation-duration: 11s; animation-delay: 1s; }
+    .black2 { left: 35%; animation-duration: 10s; animation-delay: 5s; }
+    .black3 { left: 55%; animation-duration: 12s; animation-delay: 0s; }
+    .black4 { left: 75%; animation-duration: 9s; animation-delay: 3s; }
+    .black5 { left: 95%; animation-duration: 14s; animation-delay: 6s; }
+    audio {
+      margin-bottom: 20px;
+      outline: none;
+      position: relative;
+      z-index: 10;
+    }
+    video {
+      width: 100%;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Balloons -->
+  <img src="silver.png" alt="Silver Balloon" class="balloon silver1" />
+  <img src="silver.png" alt="Silver Balloon" class="balloon silver2" />
+  <img src="silver.png" alt="Silver Balloon" class="balloon silver3" />
+  <img src="silver.png" alt="Silver Balloon" class="balloon silver4" />
+  <img src="silver.png" alt="Silver Balloon" class="balloon silver5" />
+
+  <img src="Black-Balloons-PNG-Picture.png" alt="Black Balloon" class="balloon black1" />
+  <img src="Black-Balloons-PNG-Picture.png" alt="Black Balloon" class="balloon black2" />
+  <img src="Black-Balloons-PNG-Picture.png" alt="Black Balloon" class="balloon black3" />
+  <img src="Black-Balloons-PNG-Picture.png" alt="Black Balloon" class="balloon black4" />
+  <img src="Black-Balloons-PNG-Picture.png" alt="Black Balloon" class="balloon black5" />
+
+  <div class="container">
+    <h1 id="birthday-name">Happy Birthday!</h1>
+    <p id="birthday-message">Wishing you a day filled with love, joy, and celebration.</p>
+
+    <!-- Slideshow container -->
+    <div class="slideshow" id="slideshow"></div>
+
+    <!-- Birthday song -->
+    <audio controls autoplay loop id="birthday-audio">
+      <source src="birthday_song.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <script>
+    // ==== USER CONFIGURATION ====
+    // Put your name here:
+    const userName = "Sonal";
+    // Custom message (optional):
+    const userMessage = "Wishing you a day filled with love, joy, and celebration.";
+    // Images and videos to display in slideshow
+    // For images: {type: 'image', src: 'filename.jpg', alt: 'description'}
+    // For videos: {type: 'video', src: 'filename.mp4'}
+    const slidesData = [
+      {type: 'image', src: ' your image here .jpg', alt: 'Birthday Image 1'},
+      {type: 'image', src: ' your image.jpg', alt: 'Birthday Image 2'},
+      {type: 'video', src: ' your Video 2025-06-06 at 14.52.58_b114ad77.mp4'},
+      {type: 'video', src: 'your Video 2025-06-06 at 14.53.00_2582e7b1.mp4'},
+      {type: 'video', src: 'your Video 2025-06-06 at 14.53.06_067117c6.mp4'},
+      {type: 'image', src: 'your image.jpg', alt: 'Birthday Image 3'},
+    ];
+
+    // ==== END USER CONFIGURATION ====
+
+    // Set name and message dynamically
+    document.getElementById('birthday-name').textContent = `Happy Birthday ${userName}!`;
+    document.getElementById('birthday-message').textContent = userMessage;
+
+    const slideshowContainer = document.getElementById('slideshow');
+
+    // Create slide elements
+    slidesData.forEach((slide, idx) => {
+      let slideElem = document.createElement('div');
+      slideElem.classList.add('slide');
+      if(idx === 0) slideElem.classList.add('active');
+
+      if (slide.type === 'image') {
+        let img = document.createElement('img');
+        img.src = slide.src;
+        img.alt = slide.alt || '';
+        img.style.width = '100%';
+        slideElem.appendChild(img);
+      } else if (slide.type === 'video') {
+        let video = document.createElement('video');
+        video.src = slide.src;
+        video.controls = true;
+        video.preload = 'metadata';
+        video.style.maxHeight = '400px';
+        video.style.width = '100%';
+        slideElem.appendChild(video);
+      }
+
+      slideshowContainer.appendChild(slideElem);
+    });
+
+    // Slideshow logic: play images for 3s, videos play fully
+    let slides = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+
+    function showNextSlide() {
+      // Hide current
+      slides[currentIndex].classList.remove('active');
+      // Pause video if any
+      const currentVideo = slides[currentIndex].querySelector('video');
+      if (currentVideo) {
+        currentVideo.pause();
+        currentVideo.currentTime = 0;
+      }
+
+      // Increment index
+      currentIndex = (currentIndex + 1) % slides.length;
+      const nextSlide = slides[currentIndex];
+      nextSlide.classList.add('active');
+
+      const nextVideo = nextSlide.querySelector('video');
+      if (nextVideo) {
+        // Play video, when ended show next slide
+        nextVideo.play();
+        nextVideo.onended = () => {
+          showNextSlide();
+        };
+      } else {
+        // Image slide: show for 3 seconds
+        setTimeout(showNextSlide, 3000);
+      }
+    }
+
+    // Start slideshow timing for first slide
+    if (slides[0].querySelector('video')) {
+      slides[0].querySelector('video').play();
+      slides[0].querySelector('video').onended = () => {
+        showNextSlide();
+      };
+    } else {
+      setTimeout(showNextSlide, 3000);
+    }
+  </script>
+</body>
+</html>
