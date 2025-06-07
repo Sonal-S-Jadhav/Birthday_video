@@ -1,7 +1,9 @@
 Birthday Slideshow Webpage
+
 This is a customizable birthday greeting webpage featuring animated balloons, a slideshow of images and videos, and a birthday song playing in the background. It uses plain HTML, CSS, and JavaScript.
 
 Features
+
 -Olive background with floating silver and black balloons animation.
 
 -Personalized birthday greeting message with a customizable name.
@@ -15,6 +17,7 @@ Features
 -Responsive layout that fits most screen sizes.
 
 How to Use
+
 -Clone or download this repository or save the index.html file.
 
 -Add your own images and videos:
